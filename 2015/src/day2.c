@@ -37,14 +37,9 @@ int main(void)
                 paper += total_paper(surface, slack);
                 int *arr = insertion_sort(dimension);
                 ribbon += total_ribbon(arr);
-                // for (int j = 0; j < 3; j++) {
-                //         printf("> %d\n", arr[j]);
-                // }
-                // printf("\n");
 
                 free(line);
                 free(nb);
-                // break;
         }
 
         printf("%d\n", paper);
