@@ -3,20 +3,19 @@
 #include <string.h>
 #include "../misc/misc.h"
 
-
 typedef struct {
-        unsigned int l; // length
-        unsigned int w; // width
-        unsigned int h; // height
+        u32 l; // length
+        u32 w; // width
+        u32 h; // height
 } Dimension;
 
-Dimension box(int *arr);
+Dimension box(i32 *arr);
 void initialize(Dimension *dimension);
-unsigned int box_surface(Dimension dimension);
-unsigned int extra_slack(Dimension dimension);
-unsigned int total_paper(unsigned int surface, unsigned int slack);
-int* insertion_sort(Dimension dimension);
-unsigned int total_ribbon(int *arr);
+u32 box_surface(Dimension dimension);
+u32 extra_slack(Dimension dimension);
+u32 total_paper(u32 surface, u32 slack);
+i32* insertion_sort(Dimension dimension);
+u32 total_ribbon(i32 *arr);
 
 int main(void)
 {
@@ -24,22 +23,23 @@ int main(void)
         initialize(&dimension);
         FILE *file = fopen("../data/day2.txt", "r");
         char *line;
-        int *nb = NULL;
-        unsigned int paper = 0;
-        unsigned int ribbon = 0;
-        for (int i = 0; i < 1000; i++) {
+        i32 *nb = NULL;
+        u32 paper = 0;
+        u32 ribbon = 0;
+        for (i32 i = 0; i < 1000; i++) {
                 line = get_line(file);
                 size_t len = strlen(line);
                 nb = str_to_int_array(line, len);
                 dimension = box(nb);
-                unsigned int surface = box_surface(dimension);
-                unsigned int slack = extra_slack(dimension);
+                u32 surface = box_surface(dimension);
+                u32 slack = extra_slack(dimension);
                 paper += total_paper(surface, slack);
-                int *arr = insertion_sort(dimension);
+                i32 *arr = insertion_sort(dimension);
                 ribbon += total_ribbon(arr);
 
                 free(line);
                 free(nb);
+                free(arr);
         }
 
         printf("%d\n", paper);
@@ -49,18 +49,18 @@ int main(void)
         return 0;
 }
 
-int*
+i32*
 insertion_sort(Dimension dimension)
 {
-        int *arr = malloc(3 * sizeof(int));
+        i32 *arr = malloc(3 * sizeof(i32));
         arr[0] = dimension.w;
         arr[1] = dimension.l;
         arr[2] = dimension.h;
 
-        for (int i = 0; i < 3; i++) {
-                int j = i;
+        for (i32 i = 0; i < 3; i++) {
+                i32 j = i;
                 while (j > 0 && arr[j - 1] > arr[j]) {
-                        int tmp = arr[j - 1];
+                        i32 tmp = arr[j - 1];
                         arr[j - 1] = arr[j];
                         arr[j] = tmp;
                 }
@@ -68,10 +68,10 @@ insertion_sort(Dimension dimension)
         return arr;
 }
 
-unsigned int
-total_ribbon(int *arr)
+u32
+total_ribbon(i32 *arr)
 {
-        unsigned int wrapper = 0,
+        u32 wrapper = 0,
         ribbon = 0;
 
         wrapper = arr[0]*2 + arr[1]*2;
@@ -79,31 +79,32 @@ total_ribbon(int *arr)
         return wrapper + ribbon;
 }
 
-unsigned int
-total_paper(unsigned int surface, unsigned int slack)
+u32
+total_paper(u32 surface, u32 slack)
 {
         return surface + slack;
 }
 
-unsigned int
+u32
 extra_slack(Dimension dimension)
 {
-        int arr[3] = {0};
+        i32 arr[3] = {0};
         arr[0] = dimension.l * dimension.w;
         arr[1] = dimension.w * dimension.h;
         arr[2] = dimension.h * dimension.l;
-        unsigned int slack = min_elem(arr, 3);
+        u32 slack = min_elem(arr, 3);
 
         return slack;
 }
 
-unsigned int
+u32
 box_surface(Dimension dimension)
 {
         return 2*dimension.l*dimension.w + 2*dimension.w*dimension.h + 2*dimension.h*dimension.l;
 }
 
-void initialize(Dimension *dimension)
+void
+initialize(Dimension *dimension)
 {
         dimension->l = 0;
         dimension->w = 0;
@@ -111,7 +112,7 @@ void initialize(Dimension *dimension)
 }
 
 Dimension
-box(int *arr)
+box(i32 *arr)
 {
         Dimension dimension;
         dimension.l = arr[0];
