@@ -1,6 +1,6 @@
 CC = clang
 
-CFLAGS = -std=c99\
+CFLAGS = -std=c17\
 	-Wall -Wextra -Werror -Wpedantic\
 	-o
 
@@ -9,4 +9,4 @@ build:
 	@./start
 
 .PHONY: clean
-	rm -f *.o
+	rm -f *.o ../misc/misc.o
