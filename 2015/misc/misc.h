@@ -1,8 +1,14 @@
 #include <stdio.h>
+typedef unsigned int u32;
+typedef long i32;
+typedef long long i64;
+typedef int i16;
 
-long get_file_length(FILE* file);
+u32 get_file_length(FILE* file);
 char* get_line(FILE* file);
-int* str_to_int_array(char* line, size_t len);
-int arr_length(int* arr);
-unsigned int max_elem(int* arr, int size);
-unsigned int min_elem(int* arr, int size);
+i32* str_to_int_array(char* line, size_t len);
+u32 arr_length(i32* arr);
+i32 max_elem(i32* arr, u32 size);
+i32 min_elem(i32* arr, u32 size);
+void* alloc_2D_array(u32 rows, u32 cols);
+void free_2D_array(i32 **arr, u32 rows);

@@ -7,11 +7,11 @@
 /* Read the file, go to the end, return the length and go back to the beginning.
  * Return the length
  */
-long
+u32
 get_file_length(FILE* file)
 {
         fseek(file, 0, SEEK_END);
-        long end = ftell(file);
+        u32 end = ftell(file);
         fseek(file, 0, SEEK_SET);
 
         return end;
@@ -21,14 +21,14 @@ get_file_length(FILE* file)
 char*
 get_line(FILE* file)
 {
-        int SIZE = 20;
+        i32 SIZE = 20;
 
         char *line = malloc(SIZE * sizeof(char) + 1);
         if (!line) {
                 return "ERROR: Couldn't allocate memory. Abort.";
                 exit(-1);
         }
-        for(int i = 0;;i++) {
+        for(i32 i = 0;;i++) {
                 line[i] = (char) fgetc(file);
                 if (line[i] == '\n') {
                         line[i] = '\0';
@@ -40,12 +40,12 @@ get_line(FILE* file)
 }
 
 /* Read a string and create an array of 'ints' */
-int*
+i32*
 str_to_int_array(char *line, size_t size)
 {
         char *n;
         char *str;
-        int *nb;
+        i32 *nb;
         size_t j = 0, 
                o = 0;
 
@@ -85,22 +85,23 @@ str_to_int_array(char *line, size_t size)
         return nb;
 }
 
-int
-arr_length(int *arr)
-{
-        int n = 0;
-        for (int i = 0; arr[i] != '\0'; i++) {
-                n++;
-        }
+// check array length.
+u32
+arr_length(i32 *arr) {
+  i32 n = 0;
+  for (i32 i = 0; arr[i] != '\0'; i++) {
+    n++;
+  }
 
-        return n;
+  return n;
 }
 
-unsigned int
-max_elem(int *arr, int size)
+// Check for biggest number in a array
+i32
+max_elem(i32 *arr, u32 size)
 {
-        int max = arr[0];
-        for (int i = 0; i < size; i++) {
+        i32 max = arr[0];
+        for (i32 i = 0; i < size; i++) {
                 if (arr[i] > max) {
                         max = arr[i];
                 }
@@ -109,11 +110,12 @@ max_elem(int *arr, int size)
         return max;
 }
 
-unsigned int
-min_elem(int *arr, int size)
+// Check for the lowest number in a array
+i32
+min_elem(i32 *arr, u32 size)
 {
-        int min = arr[0];
-        for (int i = 0; i < size; i++) {
+        i32 min = arr[0];
+        for (i32 i = 0; i < size; i++) {
                 if (arr[i] < min) {
                         min = arr[i];
                 }
@@ -122,3 +124,23 @@ min_elem(int *arr, int size)
         return min;
 }
 
+// allocate a 2D array, and initialize all values to 0
+void*
+alloc_2D_array(u32 rows, u32 cols)
+{
+        i32 **arr = calloc(rows, sizeof(i32*));
+        for (u32 i = 0; i < rows; i++) {
+                arr[i] = calloc(cols, sizeof(i32));
+        }
+        return arr;
+}
+
+// free a 2D array
+void
+free_2D_array(i32 **arr, u32 rows)
+{
+        for (u32 i = 0; i < rows; i++) {
+                free(arr[i]);
+        }
+        free(arr);
+}
