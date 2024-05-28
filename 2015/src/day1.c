@@ -7,10 +7,10 @@ main(void)
         FILE *file;
         file = fopen("../data/day1.txt", "r");
 
-        int floor = 0, position = 0;
-        int end = (int) get_file_length(file);
+        i32 floor = 0, position = 0;
+        u32 end = get_file_length(file);
 
-        for (int i = 0; i < end; i++) {
+        for (u32 i = 0; i < end; i++) {
                 position++;
                 if (fgetc(file) == '(') {
                         floor++;
@@ -19,12 +19,12 @@ main(void)
                 }
 
                 if (floor == -1) {
-                        printf("%d\n", position);
+                        printf("%ld\n", position);
                 }
 
         }
 
-        printf("floor: %d\n", floor);
+        printf("floor: %ld\n", floor);
         fclose(file);
         return 0;
 }
