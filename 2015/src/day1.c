@@ -8,9 +8,9 @@ main(void)
         file = fopen("../data/day1.txt", "r");
 
         i32 floor = 0, position = 0;
-        u32 end = get_file_length(file);
+        u64 end = get_file_length(file);
 
-        for (u32 i = 0; i < end; i++) {
+        for (u64 i = 0; i < end; i++) {
                 position++;
                 if (fgetc(file) == '(') {
                         floor++;
