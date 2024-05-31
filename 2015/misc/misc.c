@@ -7,7 +7,7 @@
 /* Read the file, go to the end, return the length and go back to the beginning.
  * Return the length
  */
-u32
+u64
 get_file_length(FILE* file)
 {
         fseek(file, 0, SEEK_END);
@@ -137,7 +137,7 @@ alloc_2D_array(u32 rows, u32 cols)
 
 // free a 2D array
 void
-free_2D_array(i32 **arr, u32 rows)
+free_2D_array(i64 **arr, u32 rows)
 {
         for (u32 i = 0; i < rows; i++) {
                 free(arr[i]);
