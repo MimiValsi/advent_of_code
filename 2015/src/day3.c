@@ -30,7 +30,6 @@ Grid move(char c, Grid *grid_1);
 int main(void)
 {
         FILE *file = fopen("../data/day3.txt", "r");
-        // FILE *file = fopen("../data/test.txt", "r");
         u64 unique_houses = input_1(file);
         u64 santa_and_robo_houses = input_2(file);
 
@@ -133,7 +132,7 @@ u64
 input_2(FILE *file)
 {
         u64 size = 5,
-            // count = 0,
+            count = 0,
             unique_houses = 0;
 
         Grid *santa_grid = calloc(1, sizeof(*santa_grid));
@@ -173,9 +172,8 @@ input_2(FILE *file)
         }
 
         u64 end = get_file_length(file);
-        // u64 end = 8192;
         for (u64 i = 0; i < end; i++) {
-                // count++;
+                count++;
                 if (i >= size) {
                         size *= 1.5;
 
@@ -214,20 +212,16 @@ input_2(FILE *file)
                         *santa_grid = move(c, santa_grid);
                         pos[i].x = santa_pos[i].x = santa_grid->x;
                         pos[i].y = santa_pos[i].y = santa_grid->y;
-                        // printf("santa[%lld].x = %lld\n", i, santa_pos[i].x);
-                        // printf("santa[%lld].y = %lld\n\n", i, santa_pos[i].y);
 
-                        if (check_house(grid->x, grid->y, pos, i))
+                        if (check_house(santa_pos[i].x, santa_pos[i].y, pos, count))
                                 unique_houses++;
 
                 } else {
                         *robo_grid = move(c, robo_grid);
                         pos[i].x = robo_pos[i].x = robo_grid->x;
                         pos[i].y = robo_pos[i].y = robo_grid->y;
-                        printf("robo[%lld].x = %lld\n", i, robo_pos[i].x);
-                        printf("robo[%lld].y = %lld\n\n", i, robo_pos[i].y);
 
-                        if (check_house(grid->x, grid->y, pos, i))
+                        if (check_house(robo_pos[i].x, robo_pos[i].y, pos, count))
                                 unique_houses++;
 
                 }
@@ -240,6 +234,5 @@ input_2(FILE *file)
         free(robo_grid);
         free(grid);
 
-        // return santa_houses + robo_houses;
         return unique_houses;
 }
