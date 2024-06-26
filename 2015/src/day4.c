@@ -11,9 +11,7 @@
 
 #define DIGITS(v) (sizeof(v) * CHAR_BIT * 28 / 93 + 1)
 
-
 int mining(char *input);
-_Bool fetch_zeros(int zeros, char* str_to_compare);
 
 int main(void)
 {
@@ -30,74 +28,88 @@ mining(char *input)
         unsigned char md_value[EVP_MAX_MD_SIZE];
         unsigned int md_len;
 
+        char md_buffer_five_zeros[10],
+                md_buffer_six_zeros[10];
+
+        char *five_ptr = md_buffer_five_zeros;
+        char *six_ptr = md_buffer_six_zeros;
+
+        int five_count = 0,
+                six_count = 0;
+
         md = EVP_get_digestbyname("MD5");
         if (md == NULL) {
                 printf("Unkown message digest\n");
                 exit(1);
         }
 
+        mdctx = EVP_MD_CTX_new();
+
+        FILE *f = fopen("./output.txt", "w+");
+
         for (u32 i = 0;; i++) {
-                FILE *f = fopen("./output.txt", "w+");
-                mdctx = EVP_MD_CTX_new();
-                if (!EVP_DigestInit_ex2(mdctx, md, NULL)) {
-                    printf("Message digest initialization failed.\n");
-                    EVP_MD_CTX_free(mdctx);
-                    exit(1);
+                if (!EVP_DigestInit_ex(mdctx, md, NULL)) {
+                        printf("Message digest initialization failed.\n");
+                        EVP_MD_CTX_free(mdctx);
+                        exit(1);
                 }
+
                 if (!EVP_DigestUpdate(mdctx, input, strlen(input))) {
                     printf("Message digest update failed.\n");
                     EVP_MD_CTX_free(mdctx);
                     exit(1);
                 }
 
-                if (!EVP_DigestFinal_ex(mdctx, md_value, &md_len)) {
+                if (!EVP_DigestFinal(mdctx, md_value, &md_len)) {
                     printf("Message digest finalization failed.\n");
                     EVP_MD_CTX_free(mdctx);
                     exit(1);
                 }
 
-                for (u32 j = 0; j < md_len; j++) {
-                        fprintf(f, "%02x", md_value[j]);
+
+                // print md_value[j] in buffer and then check if the first 5 hexas are 0
+                for (u32 j = 0; j < 5; j++) {
+                        sprintf(five_ptr,"%02x", md_value[j]);
+                        five_ptr += 2;
                 }
-
-                rewind(f);
-                // if (fetch_zeros(5, "00000")) {
-                //         printf("i = %ld\n", i-1);
-                //         break;
-                // }
-
-                if (fetch_zeros(6, "000000")) {
+                for (int j = 0; j < 5; j++) {
+                        if (md_buffer_five_zeros[j] == '0') {
+                                five_count++;
+                        }
+                }
+                if (five_count == 5) {
                         printf("i = %ld\n", i-1);
                         break;
                 }
+                five_ptr = &md_buffer_five_zeros[0];
+                five_count = 0;
 
-                char buf[DIGITS(i) + 1];
-                sprintf(buf, "%lu", i);
-                strcpy(&input[8], buf);
+                // print md_value[j] to buffer and checks if the first 6 hexas are 0
+                // for (u32 j = 0; j < 6; j++) {
+                //         sprintf(six_ptr,"%02x", md_value[j]);
+                //         six_ptr += 2;
+                // }
+                //
+                // for (int j = 0; j < 6; j++) {
+                //         if (md_buffer_six_zeros[j] == '0') {
+                //                 six_count++;
+                //         }
+                // }
+                // if (six_count == 6) {
+                //         printf("i = %ld\n", i-1);
+                //         break;
+                // }
+                // six_ptr = &md_buffer_six_zeros[0];
+                // six_count = 0;
 
-                if (!EVP_DigestInit_ex2(mdctx, md, NULL)) {
-                    printf("Message digest initialization failed.\n");
-                    EVP_MD_CTX_free(mdctx);
-                    exit(1);
-                }
+                char digit_buf[DIGITS(i) + 1];
+                sprintf(digit_buf, "%lu", i);
+                strcpy(&input[8], digit_buf);
 
-                EVP_MD_CTX_free(mdctx);
-                fclose(f);
-        }
-        return 0;
-
-}
-
-_Bool
-fetch_zeros(int zeros, char* str_to_compare)
-{
-        FILE *f = fopen("./output.txt", "r");
-        char mystr[zeros+1];
-        fgets(mystr, zeros+1, f);
-
-        if (strcmp(mystr, str_to_compare) == 0) {
-                return true;
+                EVP_MD_CTX_reset(mdctx);
         }
         fclose(f);
-        return false;
+        EVP_MD_CTX_free(mdctx);
+        return 0;
+
 }
