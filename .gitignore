@@ -2,3 +2,9 @@
 2015/src/start
 2015/misc/misc.o
 2015/data/test.txt
+2015/MD5/
+2015/src/vgcore*
+2015/src/*.go
+2015/src/day3bis.c
+2015/src/output.txt
+2015/src/test.c
