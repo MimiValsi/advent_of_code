@@ -1,9 +1,17 @@
+#include <stdint.h>
 #include <stdio.h>
-typedef unsigned int u32;
-typedef long i32;
-typedef long long i64;
-typedef unsigned long long u64;
-typedef int i16;
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+typedef int32_t i32;
+typedef int64_t i64;
+typedef int16_t i16;
+typedef uint8_t u8;
+typedef uint32_t u32;
+typedef uint64_t u64;
+typedef char byte;
+
+#define NL() printf("\n")
 
 u64 get_file_length(FILE* file);
 char* get_line(FILE* file);
