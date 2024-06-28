@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "misc.h"
-#include <ctype.h>
-#include <string.h>
 
 /* Read the file, go to the end, return the length and go back to the beginning.
  * Return the length
@@ -12,7 +8,7 @@ get_file_length(FILE* file)
 {
         fseek(file, 0, SEEK_END);
         u32 end = ftell(file);
-        fseek(file, 0, SEEK_SET);
+        rewind(file);
 
         return end;
 }
@@ -21,15 +17,15 @@ get_file_length(FILE* file)
 char*
 get_line(FILE* file)
 {
-        i32 SIZE = 20;
+        i32 SIZE = 40;
 
         char *line = malloc(SIZE * sizeof(char) + 1);
         if (!line) {
-                return "ERROR: Couldn't allocate memory. Abort.";
+                perror("ERROR: Couldn't allocate memory.");
                 exit(-1);
         }
         for(i32 i = 0;;i++) {
-                line[i] = (char) fgetc(file);
+                line[i] = fgetc(file);
                 if (line[i] == '\n') {
                         line[i] = '\0';
                         return line;
@@ -101,7 +97,7 @@ i32
 max_elem(i32 *arr, u32 size)
 {
         i32 max = arr[0];
-        for (i32 i = 0; i < size; i++) {
+        for (u32 i = 0; i < size; i++) {
                 if (arr[i] > max) {
                         max = arr[i];
                 }
@@ -115,7 +111,7 @@ i32
 min_elem(i32 *arr, u32 size)
 {
         i32 min = arr[0];
-        for (i32 i = 0; i < size; i++) {
+        for (u32 i = 0; i < size; i++) {
                 if (arr[i] < min) {
                         min = arr[i];
                 }
