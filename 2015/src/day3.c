@@ -33,8 +33,8 @@ int main(void)
         u64 unique_houses = input_1(file);
         u64 santa_and_robo_houses = input_2(file);
 
-        printf("unique_houses = %lld\n", unique_houses);
-        printf("santa_and_robo_houses= %lld\n", santa_and_robo_houses);
+        printf("unique_houses = %ld\n", unique_houses);
+        printf("santa_and_robo_houses= %ld\n", santa_and_robo_houses);
         fclose(file);
 
         return 0;

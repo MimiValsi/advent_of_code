@@ -19,12 +19,12 @@ main(void)
                 }
 
                 if (floor == -1) {
-                        printf("%ld\n", position);
+                        printf("%d\n", position);
                 }
 
         }
 
-        printf("floor: %ld\n", floor);
+        printf("floor: %d\n", floor);
         fclose(file);
         return 0;
 }
