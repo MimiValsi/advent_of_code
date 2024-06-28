@@ -1,17 +1,42 @@
-CC = clang
+CC =clang
+GCC = gcc
 
-CFLAGS = -std=c17\
-	-Wall -Wextra -Werror -Wpedantic\
+misc=../misc
+# -I-$(misc) 
+
+CFLAGS =-std=c17 \
 	-o
 
-EXE = start
+OPENSSL=-L/usr/local/lib/ -lssl -lcrypto
+
+EXE=start
 
 build:
 	@$(CC) $(CFLAGS) $(EXE) $(ARGS) ../misc/misc.c
 	@./$(EXE)
 
+DFLAGS =-std=c17 \
+	-g3 \
+	-Wall -Wextra -Werror -Wpedantic -Wshadow -Wwrite-strings \
+	-fsanitize=address \
+	-o
+debug:
+	$(CC) $(DFLAGS) $(EXE) $(ARGS) ../misc/misc.c
+
+	@./$(EXE)
+
+openssl:
+	$(CC) $(OPENSSL) $(CFLAGS) $(EXE) $(ARGS) ../misc/misc.c
+
+	@./$(EXE)
+
 valgrind:
 	valgrind -s --show-leak-kinds=all --track-origins=yes --leak-check=full ./$(EXE)
+
+gcc:
+	$(GCC) $(CFLAGS) $(EXE) $(ARGS) ../misc/misc.c
+
+	@./$(EXE)
 
 .PHONY: clean
 	rm -f *.o
