@@ -1,5 +1,8 @@
 #include "misc.h"
+#include <stdio.h>
+#include <string.h>
 
+#define SIZE 40
 /* Read the file, go to the end, return the length and go back to the beginning.
  * Return the length
  */
@@ -17,8 +20,6 @@ get_file_length(FILE* file)
 char*
 get_line(FILE* file)
 {
-        i32 SIZE = 40;
-
         char *line = malloc(SIZE * sizeof(char) + 1);
         if (!line) {
                 perror("ERROR: Couldn't allocate memory.");
@@ -42,7 +43,7 @@ str_to_int_array(char *line, size_t size)
         char *n;
         char *str;
         i32 *nb;
-        size_t j = 0, 
+        size_t j = 0,
                o = 0;
 
         n = malloc(size * sizeof(char) + 1);
@@ -140,3 +141,4 @@ free_2D_array(i64 **arr, u32 rows)
         }
         free(arr);
 }
+
