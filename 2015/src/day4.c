@@ -30,7 +30,7 @@ part1(char *input)
         unsigned char md_value[EVP_MAX_MD_SIZE];
         unsigned int md_len;
 
-        char md_buffer_five_zeros[10];
+        char md_buffer_five_zeros[100] = {0};
 
         char *five_ptr = md_buffer_five_zeros;
 
@@ -66,6 +66,7 @@ part1(char *input)
                 // print md_value[j] in buffer and then check if the first 5 hexas are 0
                 for (u32 j = 0; j < 5; j++) {
                         sprintf(five_ptr,"%02x", md_value[j]);
+                        // sprintf(&md_buffer_five_zeros[i*2],"%02x", md_value[j]);
                         five_ptr += 2;
                 }
                 for (int j = 0; j < 5; j++) {
@@ -78,6 +79,7 @@ part1(char *input)
                         break;
                 }
                 five_ptr = &md_buffer_five_zeros[0];
+                // md_buffer_five_zeros[100] = {0};
                 five_count = 0;
 
                 char digit_buf[DIGITS(i) + 1];
@@ -99,7 +101,7 @@ part2(char *input)
         unsigned char md_value[EVP_MAX_MD_SIZE];
         unsigned int md_len;
 
-        char md_buffer_six_zeros[10];
+        char md_buffer_six_zeros[10] = {0};
         char *six_ptr = md_buffer_six_zeros;
 
         int six_count = 0;
@@ -135,6 +137,7 @@ part2(char *input)
                 // print md_value[j] to buffer and checks if the first 6 hexas are 0
                 for (u32 j = 0; j < 6; j++) {
                         sprintf(six_ptr,"%02x", md_value[j]);
+                        // sprintf(&md_buffer_six_zeros[i*2],"%02x", md_value[j]);
                         six_ptr += 2;
                 }
 
