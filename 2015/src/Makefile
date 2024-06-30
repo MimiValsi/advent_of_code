@@ -18,7 +18,6 @@ build:
 DFLAGS =-std=c17 \
 	-g3 \
 	-Wall -Wextra -Werror -Wpedantic -Wshadow -Wwrite-strings \
-	-fsanitize=address \
 	-o
 debug:
 	$(CC) $(DFLAGS) $(EXE) $(ARGS) ../misc/misc.c
@@ -27,6 +26,11 @@ debug:
 
 openssl:
 	$(CC) $(OPENSSL) $(CFLAGS) $(EXE) $(ARGS) ../misc/misc.c
+
+	@./$(EXE)
+
+openssl_debug:
+	$(CC) $(OPENSSL) $(DFLAGS) $(EXE) $(ARGS) ../misc/misc.c
 
 	@./$(EXE)
 
