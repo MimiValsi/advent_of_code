@@ -91,12 +91,12 @@ check_double_letter(byte *line, u32 len)
 bool
 check_naughty_letters(byte *line, u32 len)
 {
-        byte *naughty[4] = {"ab", "cd", "pq", "xy"};
+        const byte *naughty[4] = {"ab", "cd", "pq", "xy"};
         byte buf[3] = {0};
         u8 c = 0;
         for (u32 i = 0; i < len-1; i++) {
-                sprintf(&buf[0], "%c", line[i]);
-                sprintf(&buf[1], "%c", line[i+1]);
+                buf[0] = line[i];
+                buf[1] = line[i+1];
                 for (u32 j = 0; j < 4; j++) {
                         if (strcmp(naughty[j], buf) == 0) {
                                 c++;
@@ -139,11 +139,11 @@ no_overlap(byte *line, u32 len)
         byte tmp[3] = {0};
 
         for (u32 i = 0; i < len; i++) {
-                sprintf(&buf[0], "%c", line[i]);
-                sprintf(&buf[1], "%c", line[i+1]);
+                buf[0] = line[i];
+                buf[1] = line[i+1];
                 for (u32 j = i+2; j < len; j++) {
-                        sprintf(&tmp[0], "%c", line[j]);
-                        sprintf(&tmp[1], "%c", line[j+1]);
+                        tmp[0] = line[j];
+                        tmp[1] = line[j+1];
                         if (strcmp(buf, tmp) == 0) {
                                 return true;
                         }
