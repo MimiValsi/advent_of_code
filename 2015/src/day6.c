@@ -11,7 +11,6 @@ void part2(FILE *file);
 int main(void)
 {
         FILE *file = fopen("../data/day6.txt", "r");
-        // FILE *file = fopen("../data/test.txt", "r");
         part1(file);
         rewind(file);
         part2(file);
@@ -24,11 +23,11 @@ part1(FILE *file)
 {
         // count the total light on lights
         u32 total = 0;
-        i32 grid[1000][1000] = {0};
+        u32 grid[1000][1000] = {0};
 
         // line value is NULL, memory will be allocated by get_line()
         // remember to free for each line
-        byte *line = NULL;
+        char *line = NULL;
 
         // light_on starts @ -1 to avoid looping when not needed
         // light_on = 0 to shut down the lights
@@ -48,9 +47,8 @@ part1(FILE *file)
             end_y = 0;
 
         // token will get value from strtok() to split string by token (a.k.a word)
-        byte *token = NULL;
+        char *token = NULL;
 
-        // for (u32 i = 0; i < 1; i++) {
         for (u32 i = 0; i < NUM_LINES; i++) {
                 line = get_line(file);
                 token = strtok(line, " ");
@@ -164,7 +162,7 @@ part2(FILE *file)
 
         // line value is NULL, memory will be allocated by get_line()
         // remember to free for each line
-        byte *line = NULL;
+        char *line = NULL;
 
         // light_on starts @ -1 to avoid looping when not needed
         // light_on = 0 to shut down the lights
@@ -187,7 +185,7 @@ part2(FILE *file)
             end_y = 0;
 
         // token will get value from strtok() to split string by token (a.k.a word)
-        byte *token = NULL;
+        char *token = NULL;
 
         // for (u32 i = 0; i < 1; i++) {
         for (u32 i = 0; i < NUM_LINES; i++) {
