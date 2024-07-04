@@ -7,11 +7,11 @@
 
 int part1(FILE *file);
 int part2(FILE *file);
-bool check_vowels(byte *line, u32 len);
-bool check_double_letter(byte *line, u32 len);
-bool check_naughty_letters(byte *line, u32 len);
-bool no_overlap(byte *line, u32 len);
-bool repeating(byte *line, u32 len);
+bool check_vowels(char *line, u32 len);
+bool check_double_letter(char *line, u32 len);
+bool check_naughty_letters(char *line, u32 len);
+bool no_overlap(char *line, u32 len);
+bool repeating(char *line, u32 len);
 
 int main(void)
 {
@@ -28,7 +28,7 @@ int main(void)
 int
 part1(FILE *file)
 {
-        byte *line = get_line(file);
+        char *line = get_line(file);
         u32 len = strlen(line);
         u32 c = 0;
         rewind(file);
@@ -52,12 +52,12 @@ part1(FILE *file)
 
 
 bool
-check_vowels(byte *line, u32 len)
+check_vowels(char *line, u32 len)
 {
-        byte vowels[5] = {'a', 'e', 'i', 'o', 'u'};
+        char vowels[5] = {'a', 'e', 'i', 'o', 'u'};
         u8 c = 0;
 
-        // Loop iterate over each char/byte line
+        // Loop iterate over each char/char line
         for (u32 i = 0; i < len; i++) {
                 // Loop iterate to check if there's any vowels and how many are present
                 for (u32 j = 0; j < 5; j++) {
@@ -74,7 +74,7 @@ check_vowels(byte *line, u32 len)
 }
 
 bool
-check_double_letter(byte *line, u32 len)
+check_double_letter(char *line, u32 len)
 {
         u8 c = 0;
         for (u32 i = 0; i < len-1; i++) {
@@ -89,10 +89,10 @@ check_double_letter(byte *line, u32 len)
 }
 
 bool
-check_naughty_letters(byte *line, u32 len)
+check_naughty_letters(char *line, u32 len)
 {
-        const byte *naughty[4] = {"ab", "cd", "pq", "xy"};
-        byte buf[3] = {0};
+        const char *naughty[4] = {"ab", "cd", "pq", "xy"};
+        char buf[3] = {0};
         u8 c = 0;
         for (u32 i = 0; i < len-1; i++) {
                 buf[0] = line[i];
@@ -112,7 +112,7 @@ check_naughty_letters(byte *line, u32 len)
 int
 part2(FILE *file)
 {
-        byte *line = get_line(file);
+        char *line = get_line(file);
         u32 len = strlen(line);
         u32 c = 0;
         rewind(file);
@@ -133,10 +133,10 @@ part2(FILE *file)
 }
 
 bool
-no_overlap(byte *line, u32 len)
+no_overlap(char *line, u32 len)
 {
-        byte buf[3] = {0};
-        byte tmp[3] = {0};
+        char buf[3] = {0};
+        char tmp[3] = {0};
 
         for (u32 i = 0; i < len; i++) {
                 buf[0] = line[i];
@@ -154,7 +154,7 @@ no_overlap(byte *line, u32 len)
 }
 
 bool
-repeating(byte *line, u32 len)
+repeating(char *line, u32 len)
 {
         for (u32 i = 0; i < len-2; i++) {
                 if (line[i] == line[i+2]) {
