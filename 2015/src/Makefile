@@ -35,7 +35,7 @@ openssl_debug:
 	@./$(EXE)
 
 valgrind:
-	valgrind -s --show-leak-kinds=all --track-origins=yes --leak-check=full ./$(EXE)
+	valgrind -s --max-stackframe=8000000 --show-leak-kinds=all --track-origins=yes --leak-check=full ./$(EXE)
 
 gcc:
 	$(GCC) $(CFLAGS) $(EXE) $(ARGS) ../misc/misc.c
