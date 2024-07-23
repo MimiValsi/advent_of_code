@@ -1,21 +1,48 @@
-CC = clang
+CC = clang -std=c99
 
-CFLAGS = -std=c99 -Imisc
+CFLAGS = -Imisc -D_POSIX_C_SOURCE=200809L
 
-EXE = launch
+DFLAGS = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wwrite-strings -D_POSIX_C_SOURCE=200809L
+
 IDIR = misc
+ODIR = objs
+SRC = src
+OPENSSL=-L/usr/local/lib/ -lssl -lcrypto
+EXE = launch
 
-objects = ./src/day1.o $(IDIR)/misc.o
+OBJS = $(ODIR)/$(DAY).o $(ODIR)/misc.o
 
-$(EXE): $(objects)
-	$(CC) $(CFLAGS) -o $@ $^
+start: objs
+build: clean $(DAY)
 
-./src/day1.o:
-	$(CC) $(CFLAGS) -c ./src/day1.c -o src/day1.o
+objs:
+	mkdir -p objs/
 
-$(IDIR)/misc.o:
+$(DAY): $(OBJS)
+	@mkdir -p objs/
+	$(CC) $(CFLAGS) -o $(EXE) $^
 
-	$(CC) $(CFLAGS) -c $(IDIR)/misc.c -o $(IDIR)/misc.o
+$(ODIR)/$(DAY).o:
+	$(CC) $(CFLAGS) -c $(SRC)/$(DAY).c -o $@
+
+$(ODIR)/misc.o:
+	$(CC) $(CFLAGS) -c $(IDIR)/misc.c -o $@
+
+debug: $(OBJS)
+	$(CC) $(DFLAGS) -o $@ $^
+
+openssl: $(OBJS)
+	$(CC) $(OPENSSL) $(CFLAGS) -o $(DAY) $^
+
+openssl_debug: $(OBJS)
+	$(CC) $(OPENSSL) $(DFLAGS) -o $(DAY) $^
 
 valgrind:
 	valgrind -s --max-stackframe=8000000 --show-leak-kinds=all --track-origins=yes --leak-check=full ./$(EXE)
+
+clean:
+	@if [ -f "objs/$(DAY).o" ]; then \
+		rm objs/$(DAY).o; \
+	fi
+
+.PHONY: clean
