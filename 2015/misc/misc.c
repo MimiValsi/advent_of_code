@@ -10,10 +10,10 @@ u64
 get_file_length(FILE* file)
 {
         fseek(file, 0, SEEK_END);
-        u32 end = ftell(file);
+        u32 length = ftell(file);
         rewind(file);
 
-        return end;
+        return length;
 }
 
 /* Read the file, and return line without '\n' */
