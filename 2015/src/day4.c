@@ -7,7 +7,7 @@
 #include <openssl/evp.h>
 #include <openssl/bio.h>
 #include <openssl/err.h>
-#include "../misc/misc.h"
+#include "misc.h"
 
 #define DIGITS(v) (sizeof(v) * CHAR_BIT * 28 / 93 + 1)
 

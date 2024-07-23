@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../misc/misc.h"
+#include "misc.h"
 
 typedef struct {
         u32 l; // length
@@ -21,7 +21,7 @@ int main(void)
 {
         Dimension dimension;
         initialize(&dimension);
-        FILE *file = fopen("../data/day2.txt", "r");
+        FILE *file = fopen("data/day2.txt", "r");
         char *line;
         i32 *nb = NULL;
         u32 paper = 0;

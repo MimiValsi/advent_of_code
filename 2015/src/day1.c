@@ -1,11 +1,10 @@
 #include <stdio.h>
-#include "../misc/misc.h"
+#include "misc.h"
 
 int
 main(void)
 {
-        FILE *file;
-        file = fopen("../data/day1.txt", "r");
+        FILE *file = fopen("data/day1.txt", "r");
 
         i32 floor = 0, position = 0;
         u64 end = get_file_length(file);

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include "../misc/misc.h"
+#include "misc.h"
 
 #define NUM_LINE 339
 
@@ -28,7 +28,6 @@ bool present_struct_wire(Table *table, u16 len, char *to_cmp);
 
 int main(void)
 {
-        // FILE *file = fopen("../data/day7.txt", "r");
         FILE *file = fopen("../data/test.txt", "r");
         part1(file);
         // rewind(file);

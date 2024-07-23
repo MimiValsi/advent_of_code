@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include "../misc/misc.h"
+#include "misc.h"
 
 #define LINES_NUM 1000
 
@@ -15,7 +15,7 @@ bool repeating(char *line, u32 len);
 
 int main(void)
 {
-        FILE *file = fopen("../data/day5.txt", "r");
+        FILE *file = fopen("data/day5.txt", "r");
         part1(file);
 
         // Need to rewind to file start to avoid segmented fault

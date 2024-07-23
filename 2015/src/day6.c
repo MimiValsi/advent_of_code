@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include "../misc/misc.h"
+#include "misc.h"
 
 #define NUM_LINES 300
 
@@ -10,7 +10,7 @@ void part2(FILE *file);
 
 int main(void)
 {
-        FILE *file = fopen("../data/day6.txt", "r");
+        FILE *file = fopen("data/day6.txt", "r");
         part1(file);
         rewind(file);
         part2(file);

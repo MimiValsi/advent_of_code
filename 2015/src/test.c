@@ -1,6 +1,4 @@
-#include "../misc/misc.h"
-#include <stdlib.h>
-#include <string.h>
+#include "misc.h"
 
 struct Link_list {
         char *key;
@@ -18,7 +16,7 @@ int main(void)
 {
         struct Link_list *head = NULL;
         head = map_init(head, "mimi", 1);
-        // map_print(head);
+        map_print(head);
 
         map_free(head);
         return 0;

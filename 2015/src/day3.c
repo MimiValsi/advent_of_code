@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../misc/misc.h"
+#include "misc.h"
 #include <stdbool.h>
 #include <time.h>
 
@@ -29,7 +29,7 @@ Grid move(char c, Grid *grid_1);
 
 int main(void)
 {
-        FILE *file = fopen("../data/day3.txt", "r");
+        FILE *file = fopen("data/day3.txt", "r");
         u64 unique_houses = input_1(file);
         u64 santa_and_robo_houses = input_2(file);
 
