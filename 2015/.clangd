@@ -1,3 +1,6 @@
 CompileFlags:
   # The path is relative to src/ in this case.
   Add: [ -I../misc/ ]
+
+Diagnostics:
+  Add: -header-insertion=never
