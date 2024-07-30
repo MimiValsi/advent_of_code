@@ -1,86 +1,93 @@
 #include "misc.h"
 
-struct Link_list {
+struct Linked_list {
         char *key;
         u16 value;
-        struct Link_list *next;
+        struct Linked_list *next;
 };
 
-struct Link_list* map_init(struct Link_list *head, char const *str, u16 value);
-void map_push(struct Link_list *head, char *str, u16 value);
-void map_free(struct Link_list *head);
-void map_print(struct Link_list *head);
-struct Link_list* map_search_key(struct Link_list *head, char *str);
+struct Linked_list* list_init(struct Linked_list *head, char const *str, u16 value);
+void list_push(struct Linked_list *head, char *str, u16 value);
+void list_free(struct Linked_list *head);
+void list_print(struct Linked_list *head);
+void list_search_key(struct Linked_list *head, char *str);
 
 int main(void)
 {
-        struct Link_list *head = NULL;
-        head = map_init(head, "mimi", 1);
-        map_print(head);
-
-        map_free(head);
+        // char **str = malloc(2);
+        // for (int i = 0; i < 1; i++) {
+        //         *str= malloc(2);
+        // }
+        // struct Linked_list *head = NULL;
+        // head = list_init(head, "mimi", 1);
+        // list_push(head, "mike", 2);
+        // list_print(head);
+        // NL();
+        // list_search_key(head, "mi");
+        //
+        // list_free(head);
         return 0;
 }
 
-struct Link_list*
-map_init(struct Link_list *head, char const *str, u16 value)
+struct Linked_list*
+list_init(struct Linked_list *head, char const *str, u16 value)
 {
         head = malloc(sizeof(*head));
         head->key = strdup(str);
         head->value = value;
+        head->next = NULL;
 
         return head;
 
 }
 
 void
-map_push(struct Link_list *head, char *str, u16 value)
+list_push(struct Linked_list *head, char *str, u16 value)
 {
-        head = malloc(sizeof(*head));
-        struct Link_list *current = head;
+        struct Linked_list *current = head;
 
         while (current->next) {
                 current = current->next;
         }
 
         current->next = malloc(sizeof(*current));
-        current->next->key = malloc(64);
-        strcpy(current->next->key, str);
+        current->next->key = strdup(str);
         current->next->value = value;
         current->next->next = NULL;
 }
 
 void
-map_print(struct Link_list *head)
+list_print(struct Linked_list *head)
 {
-        struct Link_list *current = head;
+        struct Linked_list *current = head;
         while (current) {
-                printf("current->key = %s\n", current->key);
-                printf("current->value = %d\n", current->value);
+                printf("%s = %d\n", current->key, current->value);
                 // NL();
                 current = current->next;
         }
 }
 
-struct Link_list*
-map_search_key(struct Link_list *head, char *str)
+void
+list_search_key(struct Linked_list *head, char *str)
 {
-        struct Link_list *current = head;
+        struct Linked_list *current = head;
 
-        while (current->next != NULL) {
+        while (current) {
                 if (strcmp(current->key, str) == 0) {
-                        return current;
+                        printf("key founded\n");
+                        printf("%s = %d\n", current->key, current->value);
+                        return;
                 }
                 current = current->next;
         }
 
-        return NULL;
+        printf("No key founded\n");
 }
 
 void
-map_free(struct Link_list *head)
+list_free(struct Linked_list *head)
 {
-        struct Link_list *tmp = NULL;
+        struct Linked_list *tmp = NULL;
         while (head) {
                 tmp = head;
                 head = head->next;
