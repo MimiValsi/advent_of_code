@@ -1,5 +1,4 @@
 #include "misc.h"
-#include <stdio.h>
 #include <string.h>
 
 #define SIZE 40
@@ -14,6 +13,23 @@ get_file_length(FILE* file)
         rewind(file);
 
         return length;
+}
+
+// Use strtok to separate split a string into words and add them to an arraay of strings. 
+// In this case, a struct with arr[[x]][[y]]
+struct Dyn_str
+line_split(char* line, char* delim)
+{
+        u32 i= 0;
+        struct Dyn_str dyn_str;
+        char *token = strtok(line, delim);
+        while(token) {
+                strcpy(dyn_str.str[i], token);
+                token = strtok(NULL, delim);
+                i++;
+        }
+
+        return dyn_str;
 }
 
 /* Read the file, and return line without '\n' */
@@ -38,19 +54,12 @@ get_line(FILE* file)
 
 /* Read a string and create an array of 'ints' */
 i32*
-str_to_int_array(char *line, size_t size)
+str_to_int_array(char *line, u32 size)
 {
-        char *n;
         char *str;
         i32 *nb;
         size_t j = 0,
                o = 0;
-
-        n = malloc(size * sizeof(char) + 1);
-        if (!n) {
-                return NULL;
-                exit(-1);
-        }
 
         str = calloc(5, 5);
         if (!str) {
@@ -77,7 +86,6 @@ str_to_int_array(char *line, size_t size)
                 }
         }
         free(str);
-        free(n);
 
         return nb;
 }
