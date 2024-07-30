@@ -42,6 +42,9 @@ openssl_debug: $(OBJS)
 valgrind:
 	valgrind -s --max-stackframe=8000000 --show-leak-kinds=all --track-origins=yes --leak-check=full ./$(EXE)
 
+valgrindTest: $(DAY)
+	valgrind -s --max-stackframe=8000000 --show-leak-kinds=all --track-origins=yes --leak-check=full ./$(EXE)
+
 cleanObjs:
 	rm objs/*.o
 
