@@ -10,7 +10,8 @@ SRC = src
 OPENSSL=-L/usr/local/lib/ -lssl -lcrypto
 EXE = launch
 
-OBJS = $(ODIR)/$(DAY).o $(ODIR)/misc.o
+OBJS = $(ODIR)/misc.o
+OSRC = $(DAY).o
 
 start: objs
 build: $(DAY)
@@ -19,11 +20,11 @@ build: $(DAY)
 objs:
 	mkdir -p objs/
 
-$(DAY): $(OBJS)
+$(DAY): $(OBJS) $(OSRC)
 	@mkdir -p objs/
 	$(CC) $(CFLAGS) -o $(EXE) $^
 
-$(ODIR)/$(DAY).o:
+$(OSRC):
 	$(CC) $(CFLAGS) -c $(SRC)/$(DAY).c -o $@
 
 $(ODIR)/misc.o:
@@ -41,7 +42,13 @@ openssl_debug: $(OBJS)
 valgrind:
 	valgrind -s --max-stackframe=8000000 --show-leak-kinds=all --track-origins=yes --leak-check=full ./$(EXE)
 
-clean:
+cleanObjs:
 	rm objs/*.o
 
-.PHONY: clean
+cleanAll:
+	rm objs/*.o *.o
+
+cleanDay:
+	rm *.o
+
+.PHONY: cleanObjs cleanAll cleanDay
