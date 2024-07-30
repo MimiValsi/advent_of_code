@@ -13,7 +13,8 @@ EXE = launch
 OBJS = $(ODIR)/$(DAY).o $(ODIR)/misc.o
 
 start: objs
-build: clean $(DAY)
+build: $(DAY)
+	@./launch
 
 objs:
 	mkdir -p objs/
@@ -41,8 +42,6 @@ valgrind:
 	valgrind -s --max-stackframe=8000000 --show-leak-kinds=all --track-origins=yes --leak-check=full ./$(EXE)
 
 clean:
-	@if [ -f "objs/$(DAY).o" ]; then \
-		rm objs/$(DAY).o; \
-	fi
+	rm objs/*.o
 
 .PHONY: clean
