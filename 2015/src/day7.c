@@ -14,12 +14,6 @@ void list_free(struct Linked_list *head);
 void list_print(struct Linked_list *head);
 bool list_search_key(struct Linked_list *head, char *wire);
 
-/* ll   AND  ld   ->   dl
- * [0]  [1]  [2]  [3]  [4]
- *
- * 123  ->   x
- * [0]  [1]  [2]
- * */
 
 int main(void)
 {
@@ -30,39 +24,33 @@ int main(void)
                 fclose(file);
                 exit(EXIT_FAILURE);
         }
-        struct Linked_list *head = malloc(sizeof(*head));
-        if (!head) {
-                perror("Could not allocate head");
-                exit(EXIT_FAILURE);
-        }
+
+        struct Linked_list *head = NULL;
 
         struct Dyn_str dyn_str;
         char *line = NULL;
-        // line = get_line(file);
-        // dyn_str = line_split(line, " ");
-        // head->wire = strdup(dyn_str.str[2]);
-        // head->value = atoi(dyn_str.str[0]);
-        // head->next = NULL;
-        // // free(line);
-        // line = get_line(file);
-        // dyn_str = line_split(line, " ");
-        // head->next->wire = strdup(dyn_str.str[2]);
-        // head->next->value = atoi(dyn_str.str[0]);
-        // head->next->next = NULL;
-        // list_print(head);
-        // free(line);
-        for (int i = 0; i < 2; i++) {
+
+        for (int i = 0; i < 1; i++) {
                 line = get_line(file);
                 dyn_str = line_split(line, " ");
-                // head->wire = strdup(dyn_str.str[2]);
-                // head->value = atoi(dyn_str.str[0]);
-                // head->next = NULL;
-                list_append(head, dyn_str.str[2], atoi(dyn_str.str[0]));
-                // if (isdigit(dyn_str.str[0][0])) {
-                //         list_append(head, dyn_str.str[2], atoi(dyn_str.str[0]));
-                //         // continue;
+                // head = list_append(head, dyn_str.str[2], atoi(dyn_str.str[0]));
+                /*
+                 * 123  ->   x
+                 * [0]  [1]  [2]
+                 */
+                if (isdigit(dyn_str.str[0][0])) {
+                        list_append(head, dyn_str.str[2], atoi(dyn_str.str[0]));
+                        free(line);
+                        continue;
+                }
+
+                /*
+                 * ll   AND  ld   ->   dl
+                 * [0]  [1]  [2]  [3]  [4]
+                 */
+                // if (isalpha(dyn_str.str[0][0])) {
+                //         
                 // }
-                free(line);
         }
         // list_print(head);
 
