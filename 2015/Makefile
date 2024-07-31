@@ -2,7 +2,7 @@ CC = clang -std=c99
 
 CFLAGS = -Imisc -D_POSIX_C_SOURCE=200809L
 
-DFLAGS = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wwrite-strings -D_POSIX_C_SOURCE=200809L
+DFLAGS = -Imisc -Wall -Wextra -Werror -Wpedantic -Wshadow -Wwrite-strings -D_POSIX_C_SOURCE=200809L
 
 IDIR = misc
 ODIR = objs
@@ -30,8 +30,8 @@ $(OSRC):
 $(ODIR)/misc.o:
 	$(CC) $(CFLAGS) -c $(IDIR)/misc.c -o $@
 
-debug: $(OBJS)
-	$(CC) $(DFLAGS) -o $@ $^
+debug: $(OBJS) $(OSRC)
+	$(CC) $(DFLAGS) -o $(EXE) $^
 
 openssl: $(OBJS)
 	$(CC) $(OPENSSL) $(CFLAGS) -o $(DAY) $^
