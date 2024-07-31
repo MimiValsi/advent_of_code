@@ -6,6 +6,7 @@
 2015/src/vgcore*
 2015/src/*.go
 2015/src/day3bis.c
+2015/src/day7bis.c
 2015/src/output.txt
 2015/src/test.c
 2015/src/main.py
@@ -13,3 +14,5 @@
 2015/objs/
 2015/vgcore*
 2015/*.o
+2015/debug
+
